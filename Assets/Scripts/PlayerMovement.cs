@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Sockets;
@@ -34,6 +35,8 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+            rb.gravityScale = rb.gravityScale * -1;
+            rb.rotation += 180;
         }
 
         if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
