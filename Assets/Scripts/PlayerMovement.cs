@@ -23,6 +23,8 @@ public class PlayerMovement : MonoBehaviour
         horizontal = Input.GetAxis("Horizontal");
         animator = GetComponent<Animator>();
 
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+
         if(horizontal == 0)
         {
             animator.SetBool("isRunning", false);
@@ -36,7 +38,8 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
             rb.gravityScale = rb.gravityScale * -1;
-            rb.rotation += 180;
+            spriteRenderer.flipY = !spriteRenderer.flipY;
+
         }
 
         if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
