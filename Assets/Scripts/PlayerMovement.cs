@@ -17,13 +17,17 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Animator animator;
 
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+        
+    }
+
+
     // Update is called once per frame
     void Update()
     {
-        horizontal = Input.GetAxis("Horizontal");
-        animator = GetComponent<Animator>();
-
-        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        horizontal = Input.GetAxis("Horizontal");   
 
         if(horizontal == 0)
         {
@@ -34,12 +38,10 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("isRunning", true);
         }
 
-        if (Input.GetButtonDown("Jump") && IsGrounded())
-        {
-            rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
-            rb.gravityScale = rb.gravityScale * -1;
-            spriteRenderer.flipY = !spriteRenderer.flipY;
 
+        if (Input.GetButtonDown("Jump") )
+        {
+            Gravity();
         }
 
         if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
@@ -48,6 +50,19 @@ public class PlayerMovement : MonoBehaviour
         }
 
         Flip();
+    }
+
+    private void Gravity()
+    {
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if (IsGrounded())
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+            rb.gravityScale = rb.gravityScale * -1;
+            spriteRenderer.flipY = !spriteRenderer.flipY;
+        }
+
     }
 
     private void FixedUpdate()
