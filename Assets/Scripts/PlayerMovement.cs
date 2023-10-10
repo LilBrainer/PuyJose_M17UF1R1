@@ -8,8 +8,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     private float horizontal;
-    private float speed = 8f;
-    private float jumpingPower = 16f;
+    private float speed = 20f;
     private bool isFacingRight = true;
 
     [SerializeField] private Rigidbody2D rb;
@@ -20,16 +19,48 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         animator = GetComponent<Animator>();
-        
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        horizontal = Input.GetAxis("Horizontal");   
+        horizontal = Input.GetAxis("Horizontal");
 
-        if(horizontal == 0)
+        IsRunning();
+
+        IsFalling();
+
+
+        if (Input.GetButtonDown("Jump"))
+        {
+            Gravity();
+        }
+
+
+        //if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
+        //{
+        //    rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+        //}
+
+        Flip();
+    }
+
+    private void IsFalling()
+    {
+        if (!IsGrounded())
+        {
+            animator.SetBool("onAir", true);
+        }
+        else
+        {
+            animator.SetBool("onAir", false);
+        }
+    }
+
+    private void IsRunning()
+    {
+        if (horizontal == 0)
         {
             animator.SetBool("isRunning", false);
         }
@@ -37,19 +68,6 @@ public class PlayerMovement : MonoBehaviour
         {
             animator.SetBool("isRunning", true);
         }
-
-
-        if (Input.GetButtonDown("Jump") )
-        {
-            Gravity();
-        }
-
-        if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
-        }
-
-        Flip();
     }
 
     private void Gravity()
@@ -58,9 +76,10 @@ public class PlayerMovement : MonoBehaviour
 
         if (IsGrounded())
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+            spriteRenderer.flipX = !spriteRenderer.flipX;
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.1f);
             rb.gravityScale = rb.gravityScale * -1;
-            spriteRenderer.flipY = !spriteRenderer.flipY;
+            rb.rotation += 180;
         }
 
     }
