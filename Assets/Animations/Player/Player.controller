@@ -71,8 +71,8 @@ AnimatorStateTransition:
   m_IsExit: 0
   serializedVersion: 3
   m_TransitionDuration: 0
-  m_TransitionOffset: 0.15212245
-  m_ExitTime: 0.8848498
+  m_TransitionOffset: 0
+  m_ExitTime: 0.9965482
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -123,9 +123,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0
-  m_TransitionOffset: 0.29411775
-  m_ExitTime: 1.233871
+  m_TransitionDuration: 0.005617976
+  m_TransitionOffset: 0
+  m_ExitTime: 0.9837803
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0

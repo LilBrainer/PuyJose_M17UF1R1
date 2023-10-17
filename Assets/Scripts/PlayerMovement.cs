@@ -8,17 +8,19 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     private float horizontal;
-    private float speed = 20f;
+    private float speed = 10f;
     private bool isFacingRight = true;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Animator animator;
+    [SerializeField] private SpriteRenderer spriteRenderer;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
 
@@ -72,14 +74,18 @@ public class PlayerMovement : MonoBehaviour
 
     private void Gravity()
     {
-        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        
 
         if (IsGrounded())
         {
-            spriteRenderer.flipX = !spriteRenderer.flipX;
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.1f);
             rb.gravityScale = rb.gravityScale * -1;
             rb.rotation += 180;
+            if (animator.GetBool("onAir") == true)
+            {
+                Console.WriteLine(animator.GetBool("onAir"));
+                spriteRenderer.flipX = !spriteRenderer.flipX;
+            }
         }
 
     }
@@ -99,9 +105,7 @@ public class PlayerMovement : MonoBehaviour
         if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f) 
         { 
             isFacingRight = !isFacingRight;
-            Vector3 localScale = transform.localScale;
-            localScale.x *= -1f;
-            transform.localScale = localScale;
+            spriteRenderer.flipX = !spriteRenderer.flipX;
         }
     }
 }
