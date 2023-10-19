@@ -74,18 +74,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void Gravity()
     {
-        
 
         if (IsGrounded())
         {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.1f);
             rb.gravityScale = rb.gravityScale * -1;
             rb.rotation += 180;
-            if (animator.GetBool("onAir") == true)
-            {
-                Console.WriteLine(animator.GetBool("onAir"));
-                spriteRenderer.flipX = !spriteRenderer.flipX;
-            }
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.1f);
+            spriteRenderer.flipX = !spriteRenderer.flipX;
         }
 
     }
