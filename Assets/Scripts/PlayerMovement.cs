@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
+    [SerializeField] private Transform roofCheck;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer spriteRenderer;
@@ -50,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void IsFalling()
     {
-        if (!IsGrounded())
+        if (!IsGrounded() && !IsRoofed())
         {
             animator.SetBool("onAir", true);
         }
@@ -59,6 +60,7 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("onAir", false);
         }
     }
+
 
     private void IsRunning()
     {
@@ -75,12 +77,11 @@ public class PlayerMovement : MonoBehaviour
     private void Gravity()
     {
 
-        if (IsGrounded())
+        if (IsGrounded() || IsRoofed())
         {
             rb.gravityScale = rb.gravityScale * -1;
-            rb.rotation += 180;
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.1f);
-            spriteRenderer.flipX = !spriteRenderer.flipX;
+            spriteRenderer.flipY = !spriteRenderer.flipY;
         }
 
     }
@@ -93,6 +94,10 @@ public class PlayerMovement : MonoBehaviour
     private bool IsGrounded()
     {
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+    }
+    private bool IsRoofed()
+    {
+        return Physics2D.OverlapCircle(roofCheck.position, 0.2f, groundLayer);
     }
 
     private void Flip() { 
