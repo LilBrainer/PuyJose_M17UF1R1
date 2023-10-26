@@ -15,12 +15,12 @@ public class LevelChange : MonoBehaviour
         {
             if (this.tag == "NextLevel")
             {
-                print("Changin to scene " + sceneBuildIndex);
+                print("Changing to scene " + sceneBuildIndex);
                 SceneManager.LoadScene(sceneBuildIndex+1, LoadSceneMode.Single);
             }
             else if (this.tag == "PrevLevel")
             {
-                print("Changin to scene " + sceneBuildIndex);
+                print("Changing to scene " + sceneBuildIndex);
                 SceneManager.LoadScene(sceneBuildIndex - 1, LoadSceneMode.Single);
             }
         }
