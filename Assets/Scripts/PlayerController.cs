@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
         if (pl == null)
         {
             pl = this;
+            DontDestroyOnLoad(this.gameObject);
         }
         else
         {
@@ -96,6 +97,17 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Hazard")
+        {
+            LevelManager.instance.GameOver();
+            this.gameObject.SetActive(false);
+        }
+    }
+
+
+
     private void FixedUpdate()
     {
         rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
@@ -117,5 +129,11 @@ public class PlayerController : MonoBehaviour
             isFacingRight = !isFacingRight;
             spriteRenderer.flipX = !spriteRenderer.flipX;
         }
+    }
+
+    internal static void Reset()
+    {
+        pl.gameObject.SetActive(true);
+        pl.gameObject.transform.position = new Vector3(-10f, -18f);
     }
 }
