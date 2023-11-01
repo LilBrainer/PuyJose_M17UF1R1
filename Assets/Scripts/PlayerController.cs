@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Sockets;
+using Unity.VisualScripting;
 using UnityEditor.Timeline;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -99,6 +100,20 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.tag == "Hazard" || collision.gameObject.tag == "Enemy")
+        {
+            LevelManager.instance.GameOver();
+            this.gameObject.SetActive(false);
+        }
+        if (collision.gameObject.tag == "Finish")
+        {
+            LevelManager.instance.Finish();
+            this.gameObject.SetActive(false);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
         if (collision.gameObject.tag == "Hazard")
         {
             LevelManager.instance.GameOver();
@@ -135,5 +150,6 @@ public class PlayerController : MonoBehaviour
     {
         pl.gameObject.SetActive(true);
         pl.gameObject.transform.position = new Vector3(-10f, -18f);
+        //rb.gravityScale *= 1;
     }
 }

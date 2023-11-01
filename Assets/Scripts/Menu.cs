@@ -8,6 +8,7 @@ public class Menu : MonoBehaviour
     public void OnPlayButton()
     {
         SceneManager.LoadScene(1);
+        PlayerController.Reset();
     }
 
     public void OnQuitButton()

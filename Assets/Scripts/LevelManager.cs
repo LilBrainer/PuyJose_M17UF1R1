@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
@@ -8,8 +9,15 @@ public class LevelManager : MonoBehaviour
 
     private void Awake()
     {
-        if (LevelManager.instance == null) instance = this;
-        else Destroy(LevelManager.instance);
+        if (LevelManager.instance == null)
+        {
+            instance = this;
+            //DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(LevelManager.instance);
+        }
     }
 
     public void GameOver()
@@ -18,6 +26,15 @@ public class LevelManager : MonoBehaviour
         if (_ui != null)
         {
             _ui.ToggleDeathScreen();
+        }
+    }
+
+    public void Finish()
+    {
+        UIManager _ui = GetComponent<UIManager>();
+        if (_ui != null)
+        {
+            _ui.ToggleWinnerScreen();
         }
     }
 }
